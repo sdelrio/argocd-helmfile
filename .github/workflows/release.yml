@@ -1,0 +1,48 @@
+on:
+  push:
+    tags:
+      - 'v*'
+
+name: ArgoCD release
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Get docker tag from release
+        id: docker-tag
+        uses: yuya-takeyama/docker-tag-from-github-ref-action@v1
+
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own toke 
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          body: |
+            Docker image in https://hub.docker.com/repository/docker/sdelrio/argocd-helmfile/tags?page=1&ordering=last_updated&name=v${{ steps.docker-tag.outputs.tag }}
+          draft: false
+          prerelease: false
+
+      - name: Docker login
+        run: docker login -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Build
+        run: make build-images
+
+      - name: Tags
+        run: |
+          docker tag argocd-helmfile:master ${{ secrets.DOCKER_USER }}/argocd-helmfile:v${{ steps.docker-tag.outputs.tag }}
+          docker tag argocd-helmfile:master ${{ secrets.DOCKER_USER }}/argocd-helmfile:latest
+
+      - name: Push
+        run: |
+          docker push ${{ secrets.DOCKER_USER }}/argocd-helmfile:v${{ steps.docker-tag.outputs.tag }}
+          docker push ${{ secrets.DOCKER_USER }}/argocd-helmfile:latest
+
