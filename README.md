@@ -71,6 +71,8 @@ kind:  Application
 metadata:  
   name:  testapp
   namespace: argocd
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
 spec:  
   project: default
   source:  
