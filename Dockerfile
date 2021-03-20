@@ -16,6 +16,8 @@ ARG HELM_X_VERSION="0.8.1"
 ARG HELM_GIT_VERSION="0.10.0"
 ARG HELM_LOCATION="https://get.helm.sh"
 ARG HELM_FILENAME="helm-${HELM_VERSION}-linux-amd64.tar.gz"
+ARG HELM_EXTRA_VERSION="v3.4.2"
+ARG HELM_EXTRA_FILENAME="helm-${HELM_EXTRA_VERSION}-linux-amd64.tar.gz"
 
 ARG KUBECTL_VERSION=1.19.8
 
@@ -39,6 +41,11 @@ RUN apt-get update && \
     echo Extracting ${HELM_FILENAME}... && \
     tar zxvf ${HELM_FILENAME} && mv ./linux-amd64/helm /usr/local/bin/ && \
     rm ${HELM_FILENAME} && rm -r ./linux-amd64 && \
+    # helm extra version
+    curl -OL ${HELM_LOCATION}/${HELM_EXTRA_FILENAME} && \
+    echo Extracting ${HELM_EXTRA_FILENAME}... && \
+    tar zxvf ${HELM_EXTRA_FILENAME} && mv ./linux-amd64/helm /usr/local/bin/helm-${HELM_EXTRA_VERSION} && \
+    rm ${HELM_EXTRA_FILENAME} && rm -r ./linux-amd64 && \
     # helmfile
     curl -o /usr/local/bin/helmfile -L https://github.com/roboll/helmfile/releases/download/${HELMFILE_VERSION}/helmfile_linux_amd64 && \
     # Make sure binaries downloaded are exectuable
