@@ -26,7 +26,7 @@ jobs:
           tag_name: ${{ github.ref }}
           release_name: Release ${{ github.ref }}
           body: |
-            Docker image in https://hub.docker.com/repository/docker/sdelrio/argocd-helmfile/tags?page=1&ordering=last_updated&name=v${{ steps.docker-tag.outputs.tag }}
+            Docker image in https://hub.docker.com/repository/docker/sdelrio/argocd-helmfile/tags?page=1&ordering=last_updated&name=${{ steps.docker-tag.outputs.tag }}
           draft: false
           prerelease: false
 
@@ -38,11 +38,11 @@ jobs:
 
       - name: Tags
         run: |
-          docker tag argocd-helmfile:master ${{ secrets.DOCKER_USER }}/argocd-helmfile:v${{ steps.docker-tag.outputs.tag }}
+          docker tag argocd-helmfile:master ${{ secrets.DOCKER_USER }}/argocd-helmfile:${{ steps.docker-tag.outputs.tag }}
           docker tag argocd-helmfile:master ${{ secrets.DOCKER_USER }}/argocd-helmfile:latest
 
       - name: Push
         run: |
-          docker push ${{ secrets.DOCKER_USER }}/argocd-helmfile:v${{ steps.docker-tag.outputs.tag }}
+          docker push ${{ secrets.DOCKER_USER }}/argocd-helmfile:${{ steps.docker-tag.outputs.tag }}
           docker push ${{ secrets.DOCKER_USER }}/argocd-helmfile:latest
 
