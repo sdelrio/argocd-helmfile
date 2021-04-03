@@ -1,7 +1,7 @@
-ARG VERSION="v2.0.0-rc3"
+ARG VERSION="v1.8.7"
 FROM argoproj/argocd:${VERSION}
 
-LABEL version="argo2.0.0-rc3-sops3.7.0-helmfile0.138.7"
+LABEL version="argo1.8.7-sops3.7.0-helmfile0.138.7"
 
 ARG SOPS_VERSION="v3.7.0"
 ARG SOPS_PGP_FP="1234567890ABCDEF123467890ABCDEF123456789"
