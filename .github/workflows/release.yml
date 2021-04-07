@@ -16,20 +16,6 @@ jobs:
       - name: Get docker tag from release
         id: docker-tag
         uses: yuya-takeyama/docker-tag-from-github-ref-action@v1
-
-      - name: Create Release
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own toke 
-        with:
-          tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }}
-          body: |
-            Docker image in https://hub.docker.com/repository/docker/sdelrio/argocd-helmfile/tags?page=1&ordering=last_updated&name=${{ steps.docker-tag.outputs.tag }}
-          draft: false
-          prerelease: false
-
       - name: Docker login
         run: docker login -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_PASSWORD }}
 
@@ -45,4 +31,17 @@ jobs:
         run: |
           docker push ${{ secrets.DOCKER_USER }}/argocd-helmfile:${{ steps.docker-tag.outputs.tag }}
           docker push ${{ secrets.DOCKER_USER }}/argocd-helmfile:latest
+
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own toke 
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          body: |
+            Docker image in https://hub.docker.com/repository/docker/sdelrio/argocd-helmfile/tags?page=1&ordering=last_updated&name=${{ steps.docker-tag.outputs.tag }}
+          draft: false
+          prerelease: false
 

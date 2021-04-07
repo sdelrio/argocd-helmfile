@@ -1,0 +1,22 @@
+name: Nightly Clean
+
+# Trigger Workflow every midnight UTC
+
+on:
+  schedule:
+    - cron: '0 0 * * *'  
+  workflow_dispatch: 
+#workflow_dispatch helps run workflow anytime with a single click. 
+
+jobs:
+  build:
+    name: Scheduling
+    # make sure to run this action in Linux env (like ubuntu)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Build
+        run: DOCKER_USERNAME=${{ secrets.DOCKER_USER }} DOCKER_PASSWORD=${{ secrets.DOCKER_USER }} ./scripts/clean_registry.sh
+
