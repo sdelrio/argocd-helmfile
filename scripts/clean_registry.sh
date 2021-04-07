@@ -7,7 +7,7 @@ echo Checking env DOCKER_PASSWORD defined
 
 ORGANIZATION="sdelrio"
 IMAGE="argocd-helmfile"
-
+KEEP=4
 login_data() {
 cat <<EOF
 {
@@ -27,9 +27,9 @@ curl -s "https://hub.docker.com/v2/repositories/${ORGANIZATION}/${IMAGE}/tags/?p
 -X GET \
 -H "Authorization: JWT ${DOCKER_TOKEN}" \
 | jq -r '.results|.[]|.name' | egrep "[0-f]{40}" \
-| tail -n +4 \
+| tail -n +${KEEP} \
 | xargs -L1 -I {} \
-curl -s "https://hub.docker.com/v2/repositories/${ORGANIZATION}/${IMAGE}/tags/{}/" \
+curl "https://hub.docker.com/v2/repositories/${ORGANIZATION}/${IMAGE}/tags/{}/" \
 -X DELETE \
 -H "Authorization: JWT ${DOCKER_TOKEN}"
 
