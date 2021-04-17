@@ -1,4 +1,4 @@
-ARG VERSION="v2.0.0"
+ARG VERSION="v2.0.1"
 FROM argoproj/argocd:${VERSION}
 
 LABEL version="argo1.8.7-sops3.7.0-helmfile0.138.7"
