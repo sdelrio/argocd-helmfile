@@ -12,7 +12,7 @@ update_dockerfile() {
 # Usage
 # update_dockerfile ENVVAR VALUE
   if egrep -q "ARG $1=\"$2\"" Dockerfile; then
-    echo "Update on $1=$2 not needed"
+    echo "Update no needed"
   else
     echo "Updating $1=$2"
     sed -i "s/ARG $1=.*/ARG $1=\"$2\"/" Dockerfile
@@ -42,7 +42,7 @@ for p in ${PLUGINS[@]}; do
     RELEASE=$(get_latest_release ${p})
 
     if [ ! -z "${RELEASE}" ]; then
-        echo ${p} latest release ${RELEASE}
+        echo -n "${p} installed release ${RELEASE}: "
         update_dockerfile ${ENVVAR} ${RELEASE}
     fi
 
