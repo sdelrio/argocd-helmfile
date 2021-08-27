@@ -16,6 +16,7 @@ update_dockerfile() {
   else
     echo "Updating $1=$2"
     sed -i "s/ARG $1=.*/ARG $1=\"$2\"/" Dockerfile
+    sed -i "s/LABEL version=\"argo.*-/LABEL version=\"argo-$2-/" Dockerfile
   fi 
 }
 
