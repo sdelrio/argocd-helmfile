@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 echo Checking env DOCKER_USERNAME defined
-[ -z $DOCKER_USERNAME ] && exit 1
+[ -z $DOCKER_USERNAME ] && echo DOCKER_USERNAME not defined && exit 1
 echo Checking env DOCKER_PASSWORD defined
 [ -z $DOCKER_PASSWORD ] && exit 2
 
