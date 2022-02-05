@@ -16,7 +16,7 @@ https://github.com/chatwork/dockerfiles/tree/master/argocd-helmfile
 | [Helm Secrets](https://github.com/zendesk/helm-secrets ) | allow helm to use secrets, in our case from SOPS |
 | [Helm S3](https://github.com/hypnoglow/helm-s3.git) | Allow to set up a chart repository in S3 |
 | [Helm X](https://github.com/mumoshu/helm-x) |  Treat any Kustomization or K8s manifests directory as a Helm chart |
-| [Helm git](https://github.com/hypnoglow/helm-s3.git) | Use helm charts through git repositories |
+| [Helm git](https://github.com/aslafy-z/helm-git) | Use helm charts through git repositories |
 | [Helmfile](https://github.com/roboll/helmfile) | Deploy Kubernetes Helm Charts |
 
 # Requirements
